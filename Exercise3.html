@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise3</title>
+</head>
+<body>
+<div>
+    <label for="name">name</label><input type="text" id="name">
+</div>
+<div>
+    <label for="surname">surname</label><input type="text" id="surname">
+</div>
+<div>
+    <label for="registarskatablica">registarska tablica</label><input type="text" id="registarskatablica">
+</div>
+<div>
+    <label for="starost">godina na starost</label><input type="text" id="starost">
+</div>
+<div>
+    <label for="dasoobrajkajnanezgoda">da</label><input type="radio" id="dasoobrajkajnanezgoda">
+    <label for="nesoobrajkajnanezgoda">ne</label><input type="radio" id="nesoobrajkajnanezgoda">
+</div>
+<div>
+    <button onclick="generiraj()" id="generiraj">Generiraj smetka</button>
+</div>
+<p>Vkupno smetki za plakanje<span id="zaplakanje">0</span></p>
+<div id="dodadi">
+
+</div>
+<script>
+    let counterplakanje=0;
+    function generiraj() {
+        var name= document.getElementById("name").value
+        var surname= document.getElementById("surname").value
+        var registarskatablica= document.getElementById("registarskatablica").value
+        var starost= document.getElementById("starost").value
+        var danezgoda= document.getElementById("starost").value
+        var nenezgoda= document.getElementById("starost").value
+        var nezgoda
+        if(danezgoda.length===0){
+            nezgoda="Ima";
+        }else{
+            nezgoda="Nema";
+        }
+        if(name.length===0||surname.length===0||
+            registarskatablica.length===0||starost.length===0||nezgoda.length===0){
+            alert("nemas se vneseno")
+            return
+        }
+        if(!proverkanataplica(registarskatablica)){
+            alert("netocna tablica")
+            return;
+        }
+        var cenazaplakanje=3000
+        if(danezgoda.length!==0){
+            cenazaplakanje+=500
+        }
+        if(zlatnatablica(registarskatablica)){
+            cenazaplakanje+=1000;
+        }
+        var boja
+        if(starost<30){
+            boja="blue"
+        }else{
+            boja="red"
+        }
+
+        var zadodavanje='<div style="display:inline-block; width: 100px;height: 100px;background: '+boja+' "><div>'+name+'</div><div>'+surname+'</div><div>'+registarskatablica+'</div><div>'+starost+'</div><div>'+nezgoda+'</div><div>'+cenazaplakanje+'</div><div><button onclick="plati()">Plati</button><button onclick="izbrisi(this)">Izbrisi</button></div></div>'
+        counterplakanje++;
+        var plakanje=document.getElementById("zaplakanje");
+        plakanje.innerHTML=counterplakanje;
+        var dodadi=document.getElementById("dodadi")
+        dodadi.innerHTML+=zadodavanje
+
+    }
+    function proverkanataplica(input){
+        var prvibukvi=input.slice(0,2)
+        if(!isNaN(prvibukvi[0])||!isNaN(prvibukvi[1])){
+            return false
+        }
+        var brojki=input.slice(3,7)
+        for (let i=0;i<brojki.length;i++){
+            if(isNaN(brojki[i])){
+                return false
+            }
+        }
+        var poslednibukvi=input.slice(8,10)
+        if(!isNaN(poslednibukvi[0])||!isNaN(poslednibukvi[1])){
+            return false
+        }
+        return true
+
+    }
+    function izbrisi(obj) {
+        var brishi=obj.parentNode.parentNode
+        document.getElementById("dodadi").removeChild(brishie)
+    }
+    function zlatnatablica(input){
+        var brojki=input.slice(3,7)
+        for (let i=0;i<brojki.length-1;i++){
+            if(brojki[i]!==brojki[i+1]){
+                return false
+            }
+        }
+        return true;
+    }
+</script>
+
+</body>
+</html>

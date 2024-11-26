@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise2</title>
+</head>
+<body>
+<div>
+    <label for="username">Username</label><input type="text" id="username">
+</div>
+<div>
+    <label for="id">id</label><input type="text" id="id">
+</div>
+<div>
+    <label for="width">width</label><input type="text" id="width">
+</div>
+<div>
+    <label for="height">height</label><input type="text" id="height">
+</div>
+<div>
+    <label for="color">color</label><select id="color"><option id="red">red</option><option id="yellow">yellow</option><option id="green">green</option><option id="blue">blue</option></select>
+</div>
+<div>
+    <button onclick="vnesi()" id="add" >Add</button>
+</div>
+<p>Vkupnata cena e: <span id="cena">0</span></p>
+<div id="zadodavanje"></div>
+<script>
+    var vkupnacena=0;
+    function vnesi() {
+        var username=document.getElementById("username").value
+        var id=document.getElementById("id").value
+        var height=document.getElementById("height").value
+        var width=document.getElementById("width").value
+        var color=document.getElementById("color").value
+        if(username.length===0||id.length===0||
+            height.length===0||width.length===0||color.length===0){
+            alert("Potrebno e da gi popolnite site polinja");
+            return
+        }
+        if(daliIDsesostoiodmali(id)){
+            alert("id треба да се состои од мали букви само(не смее бројки, а специјални знаци смее, но не мора)")
+            return
+        }
+        if(width>500||height>500||width<1||height<1){
+            alert("dimenziite treba da se po mali od 500px i ne po mali od 1px")
+        }
+        var momentalnacena=width*height*0.5;
+        if(color=="red"){
+            momentalnacena+=1000;
+        }
+        vkupnacena+=momentalnacena;
+        var dodadi='<div id="dodaden" style="display: inline-block; width:'+width+'px; height:'+height+'px;background-color: '+color+'"><div>Ussername '+username+'</div><div>id '+id+'</div><div>width '+width+' px</div><div>height '+height+'</div><div>color '+color+'</div><div><button onclick="sellbutton(this,'+momentalnacena+')" id="sell">Sell</button></div></div>'
+        var zadodavanje=document.getElementById("zadodavanje")
+        var promenanacena= document.getElementById("cena")
+        promenanacena.innerHTML=vkupnacena
+        zadodavanje.innerHTML+=dodadi
+
+
+
+    }
+    function daliIDsesostoiodmali(input){
+        let golemicounter=0;
+        let brojkicounter=0
+        for (let i=0;i<input.length;i++){
+            if(input.charAt(i).toUpperCase()===input.charAt(i)){
+                golemicounter++;
+            }
+            if(!isNaN(input.charAt(i))){
+                brojkicounter++;
+            }
+        }
+        if(golemicounter>1||brojkicounter>1){
+            return true;
+        }
+        return false;
+    }
+    function sellbutton(input,momentalna){
+        var brishi=input.parentElement.parentElement
+        console.log(brishi)
+        var momentalnacena=parseInt(momentalna)
+        console.log(momentalnacena)
+        if(brishi.backgroundColor=="red"){
+            momentalnacena+=1000;
+        }
+        var promenetacena= document.getElementById("cena")
+        vkupnacena-=momentalnacena
+        promenetacena.innerHTML=vkupnacena
+        document.getElementById("zadodavanje").removeChild(brishi);
+
+
+    }
+</script>
+</body>
+</html>

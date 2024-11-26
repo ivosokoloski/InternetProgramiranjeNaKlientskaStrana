@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise1</title>
+    <style>
+        div{
+            padding: 10px;
+        }
+        input{
+            margin-right: auto;
+        }
+        td,th{
+            border: 2px solid black;
+        }
+        table{
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+<div>
+<label for="name">Name and Surname</label><input type="text" id="name">
+</div>
+<div>
+<label for="email">Email</label><input type="text" id="email">
+</div>
+<div>
+<label for="age">Age</label><input type="text" id="age">
+</div>
+<div>
+<label for="username">Username</label><input type="text" id="username">
+</div>
+<div>
+<label for="password">Password</label><input type="text" id="password">
+</div>
+<div>
+<label for="role">Role</label><select id="role"><option>teacher</option><option>student</option></select>
+</div>
+<div>
+<button id="add" onclick="insert()">Add</button>
+</div>
+<p>Availabile teachers: <span id="brojkorisnici">0</span></p>
+<table id="table">
+    <tr>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Age</th>
+        <th>Role</th>
+        <th>Actions</th>
+    </tr>
+</table>
+<script>
+    var array= new Array(100);
+    var korisnici=0;
+    function insert(){
+        var name=document.getElementById("name").value
+        var email=document.getElementById("email").value
+        var age=document.getElementById("age").value
+        var username=document.getElementById("username").value
+        var password=document.getElementById("password").value
+        var role=document.getElementById("role").value
+        if(name.length===0||email.length===0||
+            age.length===0||
+            username.length===0||
+            password.length===0||
+            role.length===0){
+            alert("Greska vnesi gi site polinja")
+            return;
+        }
+        if(!iscorectpassword(password)){
+            alert("Incorrect password")
+            return
+        }
+        for (let i=0;i<array.length;i++){
+            if(name===array[i]){
+                alert("Already exist")
+                return;
+            }
+        }
+        var action
+        var colorforbackground
+        if(role==="teacher"){
+           action= '<button onclick="changecolor(this)">Hire</button>';
+            colorforbackground="green"
+        }else{
+            action=""
+            colorforbackground="blue"
+        }
+        var dodadi= '<tr style="background: '+colorforbackground+' " id="redica"><td>'+name+'</td><td>'+username+'</td><td>'+email+'</td><td>'+age+'</td><td>'+role+'</td><td>'+action+'</td></tr>'
+        array[korisnici]=name;
+        korisnici++;
+        document.getElementById("brojkorisnici").innerHTML=korisnici;
+        var tabelce= document.getElementById("table")
+        tabelce.innerHTML +=dodadi
+    }
+    function iscorectpassword(password){
+        let countergolemi=0;
+        let counterbrojki=0;
+        for (let i=0;i<password.length;i++){
+            if(password.charAt(i)===password.charAt(i).toUpperCase()){
+                countergolemi++;
+            }
+            if(!isNaN(password.charAt(i))){
+                counterbrojki++;
+            }
+        }
+        if(countergolemi<1||counterbrojki<1){
+            return false;
+        }
+        return true;
+    }
+    function changecolor(obj){
+        var row= obj.parentNode.parentNode
+        row.style.backgroundColor="lightgray"
+        var brisi= obj.parentElement
+        brisi.removeChild(obj)
+    }
+
+</script>
+</body>
+</html>
