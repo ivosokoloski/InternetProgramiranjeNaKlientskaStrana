@@ -31,8 +31,8 @@
     <label for="starost">godina na starost</label><input type="text" id="starost">
 </div>
 <div>
-    <label for="dasoobrajkajnanezgoda">da</label><input type="radio" id="dasoobrajkajnanezgoda">
-    <label for="nesoobrajkajnanezgoda">ne</label><input type="radio" id="nesoobrajkajnanezgoda">
+    <label for="dasoobrajkajnanezgoda">da</label><input type="radio" id="dasoobrajkajnanezgoda" name="soobrakjanjanezgoda">
+    <label for="nesoobrajkajnanezgoda">ne</label><input type="radio" id="nesoobrajkajnanezgoda" name="soobrakjanjanezgoda">
 </div>
 <div>
     <button onclick="generiraj()" id="generiraj">Generiraj smetka</button>
@@ -107,7 +107,9 @@
     }
     function izbrisi(obj) {
         var brishi=obj.parentNode.parentNode
-        document.getElementById("dodadi").removeChild(brishie)
+        document.getElementById("dodadi").removeChild(brishi)
+        counterplakanje--;
+        document.getElementById("zaplakanje").innerHTML=counterplakanje;
     }
     function zlatnatablica(input){
         var brojki=input.slice(3,7)
@@ -121,4 +123,4 @@
 </script>
 
 </body>
-</html>
+</html></html>
