@@ -12,8 +12,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Exercise2</title>
+    <style>
+        #text{
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            width: 800px;
+            height: 300px;
+        }
+        body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #navbar{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            margin: 10px;
+            background:darkslategray;
+            border-radius: 10px;
+            width: 200px;
+            height: 200px;
+        }
+    </style>
 </head>
 <body>
+<div id="text">
+    Да се направи веб страна каде што се внесува username,id,width,height,color(red,yellow,green,blue) и копче Add.
+    Доколку не се пополнети сите полиња треба да не се дозволи внесување на податоците и се фрла грешка а полињата не се ресетираат.
+    Треба да се провери дали id се состои од мали букви само(не смее бројки, а специјални знаци смее, но не мора).
+    При внесување нов корисник треба да се провери дали id-to е исто, доколку е исто само треба да се апдејтираат другите податоци во
+    веќе постоечкиот корисник.Вкупната цена се пресметува како pixel * 0.5. Вкупниот број на пиксели се добива како width*height. Ако бојата
+    е црвена треба да се додаде 1000 на постоечката цена, во спротивно не се додава ништо.
+    Должината и висината мора да се ненулти вредности и не смеат да бидат повеќе од 500.
+    При додавање се додава и копче Sell, кое што при кликнување на него се брише елементот и при тоа се ажурира вкупната сума на продадени
+    картички.
+</div>
+<div id="navbar">
 <div>
     <label for="username">Username</label><input type="text" id="username">
 </div>
@@ -31,6 +70,7 @@
 </div>
 <div>
     <button onclick="vnesi()" id="add" >Add</button>
+</div>
 </div>
 <p>Vkupnata cena e: <span id="cena">0</span></p>
 <div id="zadodavanje"></div>
