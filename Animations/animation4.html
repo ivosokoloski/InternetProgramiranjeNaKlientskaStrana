@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Animation4</title>
+    <style>
+        .box{
+            width: 200px;
+            height: 200px;
+            position: absolute;
+        }
+    </style>
+    <script src="anime-master/lib/anime.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var colors=["red","green","yellow","blue","pink","orange","black",]
+    var container=document.getElementById("container")
+    function setcards(){
+        for (let i=0;i<colors.length;i++){
+            var box=document.createElement("div")
+            box.className="box";
+            box.id=i
+            box.style.left=`${i*10}px`;
+            box.style.top=`${i*10}px`;
+            box.style.background=colors[i]
+            container.append(box)
+        }
+    }
+    window.onload= function (){
+        setcards()
+
+    }
+
+
+</script>
+</body>
+</html>

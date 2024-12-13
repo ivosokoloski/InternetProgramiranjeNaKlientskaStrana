@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Animation3</title>
+    <style>
+        html, .container{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            text-align: center;
+        }
+        .box{
+            width: 200px;
+            height: 200px;
+            background: red;
+            position: relative;
+        }
+        #box2{
+            background: yellow;
+        }
+        img{
+            width: 400px;
+            height: 200px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<h1 id="message">Wait until page load successful</h1>
+<div class="container">
+    <img id="image" src="flagmacedonia.webp">
+    <div class="box" id="box1"></div>
+    <div class="box" id="box2"></div>
+</div>
+<script>
+    var position=0
+    var box1=document.getElementById("box1")
+    var box2=document.getElementById("box2")
+    var image=document.getElementById("image")
+    function MainFunction() {
+        message.style.display="none"
+       var interval1= setInterval(()=>{
+            position+=10
+            box1.style.right=`${position}px`
+            box2.style.left=`${position}px`
+            if(position>300){
+                clearInterval(interval1)
+                var interval2= setInterval(()=>{
+                    position-=10
+                    box1.style.right=`${position}px`
+                    box2.style.left=`${position}px`
+                    if(position<=0){
+                        box1.style.display="none"
+                        box2.style.display="none"
+                        image.style.display="block"
+                        clearInterval(interval2)
+                    }
+                },20)
+            }
+
+        },20)
+    }
+    window.onload=function (){
+        setTimeout(MainFunction,1000)
+    }
+
+</script>
+</body>
+</html>

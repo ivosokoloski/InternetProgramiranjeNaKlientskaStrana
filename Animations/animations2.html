@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Animation2</title>
+    <style>
+        html, .container{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            text-align: center;
+        }
+        .box{
+            width: 200px;
+            height: 200px;
+            background: red;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<h1 id="message">Wait until page load successful</h1>
+<div class="container">
+<div class="box"></div>
+</div>
+<script>
+
+    var colors=["red","green","yellow","blue","pink","orange","black",]
+
+    var box=document.getElementsByClassName("box")[0]
+    var message=document.getElementById("message")
+    var radius=0;
+    let position=0;
+
+    function BoxAnimation1() {
+        let interval= setInterval(()=>{
+            position+=10;
+            box.style.left=`${position}px`
+            if (position>=300){
+                clearInterval(interval)
+            }
+        },20)
+    }
+
+    function theMessage() {
+        var number=3;
+        var interval= setInterval(()=>{
+            message.innerHTML="Box animation after: "+number
+            number--;
+            if(number<-1){
+                message.innerHTML="Box animation ended"
+                clearInterval(interval)
+            }
+        },1000)
+    }
+    function BoxAnimation2() {
+        var interval= setInterval(()=>{
+            radius+=2
+            box.style.borderRadius=`${radius}%`
+            if(radius>=200){
+                message.innerHTML="Box is circle"
+                clearInterval(interval)
+            }
+        },20)
+    }
+
+    function BoxAnimation3() {
+        radius=100
+        let interval= setInterval(()=>{
+            position-=10;
+            box.style.left=`${position}px`
+            if (position<=0){
+                clearInterval(interval)
+            }
+        },20)
+        var interval2= setInterval(()=>{
+            radius-=2
+            box.style.borderRadius=`${radius}%`
+            if(radius<=0){
+                message.innerHTML="Lets see this again with another color"
+                clearInterval(interval2)
+            }
+        },20)
+
+    }
+
+
+    window.onload= function (){
+        let i=0;
+        setInterval(()=>{
+            box.style.background=colors[i]
+            setTimeout(theMessage,0)
+            setTimeout(BoxAnimation1,4000);
+            setTimeout(BoxAnimation2,5000);
+            setTimeout(BoxAnimation3,7000);
+            i++
+            if(i===colors.length){
+                i=0;
+            }
+        },9000)
+    }
+</script>
+</body>
+</html>
