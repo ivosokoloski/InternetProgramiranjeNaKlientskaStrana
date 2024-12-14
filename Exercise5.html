@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise5</title>
+    <style>
+        #tabeli >div{
+            display: inline-block;
+            margin: 10px;
+        }
+        table{
+            border-collapse: collapse;
+        }
+        th,td{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<h1>Online shop</h1>
+<div>
+    Name and Surname: <input value="Name" type="text" id="name">
+</div>
+<div>
+    Item: <input value="item" type="text" id="item">
+</div>
+<div>
+    Item code: <input placeholder="Enter code" type="text" id="code">
+</div>
+<div>
+    Item description: <input value="description" type="text" id="description">
+</div>
+<div>
+    Price: <input type="text" value="20" id="price">
+</div>
+<div>
+    Used: <select id="UsedUnused"><option id="Used">Used</option><option id="Unused">Unused</option></select>
+</div>
+<div>
+    <button onclick="add()">Add</button>
+</div>
+<h4>Active items <span id="active_items">0</span></h4>
+<div id="tabeli">
+    <div id="prvatabela">
+        <h2>Used items</h2>
+        <table id="Usedtabela">
+            <tr>
+                <th>Name</th>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Code</th>
+                <th>Number</th>
+                <th>Action</th>
+            </tr>
+        </table>
+    </div>
+    <div id="vtoratabela">
+        <h2>Unused items</h2>
+        <table id="Unusedtabela">
+            <tr>
+                <th>Name</th>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Code</th>
+                <th>Number</th>
+                <th>Action</th>
+            </tr>
+        </table>
+    </div>
+</div>
+<script>
+    var activeitems=0;
+    function add(){
+        var name= document.getElementById("name").value
+        var item= document.getElementById("item").value
+        var code= document.getElementById("code").value
+        var description= document.getElementById("description").value
+        var price= document.getElementById("price").value
+        var usedunused= document.getElementById("UsedUnused").value
+        if(name.length===0||item.length===0||
+            code.length===0||description.length===0||price.length===0){
+            alert("Vnesi gi site polinja")
+            return
+        }
+        if(document.getElementById(code)!==null){
+            alert("Vekje postoi")
+            return;
+        }
+        if(price<=0){
+            alert("Cenata treba da e pogolema od 0")
+            return;
+        }
+        price=parseInt(price)
+        price+=price*0.1
+
+        var number=sredenkod(code);
+        var dodadi="<tr id='"+code+"'><td>"+name+"</td><td>"+item+"</td><td>"+price+"</td><td>"+code+"</td><td>"+number+"</td><td><button onclick='sold(this)' id='Sold'>Sold</button></td></tr>"
+        activeitems++;
+        if(usedunused==="Used"){
+            document.getElementById("Usedtabela").innerHTML+=dodadi
+        }else{
+            document.getElementById("Unusedtabela").innerHTML+=dodadi
+        }
+        document.getElementById("active_items").innerHTML=activeitems;
+
+    }
+    function sold(obj){
+        var smeniboja= obj.parentElement.parentElement
+        smeniboja.style.background="orange"
+        obj.parentElement.removeChild(obj)
+        activeitems--
+        document.getElementById("active_items").innerHTML=activeitems;
+    }
+    function sredenkod(obj){
+        obj=obj.replaceAll("!", "");
+        console.log(obj)
+        for (let i=0;i<10;i++){
+            obj=obj.replaceAll(i.toString(),"")
+            console.log(obj)
+        }
+        return obj
+    }
+</script>
+</body>
+</html>
