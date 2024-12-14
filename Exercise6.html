@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise6</title>
+    <style>
+        #mestozakarticki >div{
+            display: inline-block;
+            margin: 10px;
+            padding: 10px;
+            border: 2px solid black;
+        }
+        #kreiranjekarticka , #generiranjebrojkombinacija{
+            display: inline-block;
+            margin: 10px;
+            vertical-align: top;
+        }
+
+    </style>
+</head>
+<body>
+<h1>National lottery game</h1>
+
+<div id="kreiranjekarticka">
+    <div>
+        Name: <input value="name" type="text" id="name">
+    </div>
+    <div>
+        Suma na uplata: <input value="50" type="text" id="suma">
+    </div>
+    <div>
+        Shifra na uplata: <input value="pin" type="text" id="sifra">
+    </div>
+    <div>
+        Kombinacija: <input value="10 12 4 5 2 1 7" type="text" id="kombinacija">
+    </div>
+    <div>
+        Bonus: <select id="bonus"><option>Yes</option><option>No</option></select>
+    </div>
+    <div>
+        <button onclick="vnesi()">Vnesi</button>
+    </div>
+</div>
+<div id="generiranjebrojkombinacija">
+    <div id="randomkombinacii">...</div>
+    <button onclick="generiraj()">Generiraj kombinacii</button>
+</div>
+<div id="mestozakarticki"></div>
+<script>
+    function generiraj(){
+
+        var numbers= new String();
+        for (let i=0;i<7;i++){
+            var num=parseInt(Math.random()*31+1)
+            numbers+="<p  style='display: inline-block;margin: 2px ; border: 1px solid black ; border-radius: 50%' class='krugcinja'>"+num+"</p>"
+        }
+        document.getElementById("randomkombinacii").innerHTML=numbers
+        for (let i=0;i<kartickicounter;i++){
+            var karticka=document.getElementsByClassName("karticki")[i].getElementsByClassName("kombinacija")[0].textContent
+            karticka=karticka.split(":")[1]
+            var counter=0;
+            for (let j=0;j<7;j++){
+                for(let k=0;k<7;k++){
+                    console.log(numbers.children().textContent)
+                    if(numbers[j]===numbers[k]){
+                        counter++;
+                    }
+                }
+            }
+            if(counter<=3){
+                document.getElementsByClassName("karticki")[i].style.background="orange"
+            }else if(counter<=5){
+                document.getElementsByClassName("karticki")[i].style.background="blue"
+            }else{
+                document.getElementsByClassName("karticki")[i].style.background="green"
+            }
+        }
+    }
+    var kartickicounter=0
+    function vnesi(){
+        var name=document.getElementById("name").value
+        var sifra=document.getElementById("sifra").value
+        var suma=document.getElementById("suma").value
+        var kombinacija=document.getElementById("kombinacija").value
+        var bonus=document.getElementById("bonus").value
+        if(name.length===0||sifra.length===0||
+            suma.length===0||kombinacija.length===0){
+            alert("vnesi gi site polinja")
+            return;
+        }
+        if(document.getElementById(sifra)!==null||sifra.includes("!")||sifra.includes("%")){
+            alert("veke postoi ili sodrzi ! ili %")
+            return;
+        }
+        var numbers= sreduvanjekombinacii(kombinacija)
+        var dodadi="<div class='karticki' id='"+sifra+"'><div>Name:"+name+"</div><div>code:"+sifra+"</div><div class='kombinacija'>Kombinacii:"+numbers+"</div><div>uplata:"+suma+"</div><div>total:$</div></div>"
+        document.getElementById("mestozakarticki").innerHTML+=dodadi;
+        kartickicounter++;
+    }
+    function sreduvanjekombinacii(obj){
+        var numbers= new String();
+        obj= obj.split(" ")
+        for (let i=0;i<obj.length;i++){
+            numbers+="<p  style='display: inline-block;margin: 2px ; border: 1px solid black ; border-radius: 50%' class='krugcinja'>"+obj[i]+"</p>"
+        }
+        return numbers
+    }
+</script>
+</body>
+</html>
