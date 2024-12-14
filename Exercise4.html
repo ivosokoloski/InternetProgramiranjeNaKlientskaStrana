@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Exercise4</title>
+  <style>
+    #text{
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      width: 800px;
+      height: 300px;
+    }
+    body{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    #navbar{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 20px;
+      margin: 10px;
+      background:darkslategray;
+      border-radius: 10px;
+      width: 200px;
+      height: 200px;
+    }
+  </style>
+</head>
+<body>
+<div id="text">
+  Да се направи веб-страница за регистрирање на лет на беспилотни летала.
+  Во горниот дел од веб-страницата се внесуваат под сопственикот на воздухопловот (име и презиме),
+  ознака на леталото, координати на полетување, радиус на летот, висина на летот и тип на летало кое
+  се зема од опаѓачка листа (Едрилица или Дрон). При кликнување на копчето "Најави", ако сите полиња
+  се пополнети, се додава запис во листата за регистрирани летови, а полињата се рестартираат (15 поени).
+  Ако не се внесени сите полиња се печати порака за грешка (5 поени). Притоа, при внесувањето на записот треба
+  да се направи проверка на ознаката на леталото. Треба да се провери дали форматот на ознаката е валиден,
+  односно Z3-UNR-1234 (Z3-UNR-четири броеви) (15 поени). Дополнително, за да може да се додаде записот треба да
+  се провери радиусот да има максимална вредност 500 метри, а висината на летот да не надминува 150м (10 поени).
+  Ова ограничување не важи за летало кај кое четирите броеви од ознаката се исти. Соодветно на овие податоци,
+  записите за сите едрилици имаат рамки околу нив, а за записот за дрон има рамка околу него доколку висината и
+  радиусот на летање се исти, а во спротивно нема (10 поени). Во секој запис има и копчиња „Потврди" и „Откажи".
+  За секој запис за лет при кликнување на копчето „Потврди" записот станува зелен, а при клик на копчето „Откажи"
+  избраниот запис се брише од погледот (5 поени). Вкупниот број на моментално пријавени летови е запишан до
+  формата (5 поени). Во прилог изгледот на страницата (15 поени).
+</div>
+<div id="navbar">
+  <div>
+    <label for="name">Name and Surname</label><input value="Name" type="text" id="name">
+  </div>
+  <div>
+    <label for="oznaka">Oznaka</label><input value="Z3-UNR-1234" type="text" id="oznaka">
+  </div>
+  <div>
+    <label for="koordinati">Koordinati</label><input value="10" type="text" id="koordinati">
+  </div>
+  <div>
+    <label for="radius">Radius</label><input value="250" type="text" id="radius">
+  </div>
+  <div>
+    <label for="visina">visina</label><input value="100" type="text" id="visina">
+  </div>
+  <div>
+    <label for="tip">Tip na letalo</label><select id="tip"><option id="edrilica">Edrilica</option><option id="dron">Dron</option></select>
+  </div>
+  <div>
+    <button onclick="najava()" id="najavi">Najavi</button>
+  </div>
+</div>
+<div id="dodadi">
+
+</div>
+<script>
+  function najava() {
+    var name=document.getElementById("name").value
+    var oznaka=document.getElementById("oznaka").value
+    var koordinati=document.getElementById("koordinati").value
+    var radius=document.getElementById("radius").value
+    var visina=document.getElementById("visina").value
+    var tip=document.getElementById("tip").value
+    if(name.length===0||oznaka.length===0||koordinati.length===0||
+            radius.length===0||visina.length===0||tip.length===0){
+      alert("vnesi gi site polinja")
+      return;
+    }
+    if(!tocnaoznaka(oznaka)){
+      alert("gresna oznaka")
+      return;
+    }
+    if(radius>500||visina>150&&!istibroevi(oznaka)){
+      alert("netocni radius ili visina")
+      return;
+    }
+    if(tip==="Edrilica"){
+      var dodadi="<div  style=' display: inline-block; border: 2px solid black ;width: 200px; height: 100px'><div>"+name+""+oznaka+"</div><div>"+radius+""+visina+"</div><div>"+tip+"</div><div><button onclick='potvrdi(this)'>Porvrdi</button><button onclick='izbrisi(this)'>Izbrisi</button></div></div>"
+    }else{
+      if(radius===visina){
+        var dodadi="<div  style='display: inline-block; border: 2px solid black ;width: 200px; height: 100px'><div>"+name+""+oznaka+"</div><div>"+radius+""+visina+"</div><div>"+tip+"</div><div><button onclick='potvrdi(this)'>Porvrdi</button><button onclick='izbrisi(this)'>Izbrisi</button></div></div>"
+
+      }else
+        var dodadi="<div style='display: inline-block; width: 200px; height: 100px'><div>"+name+""+oznaka+"</div><div>"+radius+""+visina+"</div><div>"+tip+"</div><div><button onclick='potvrdi(this)'>Porvrdi</button><button onclick='izbrisi(this)'>Izbrisi</button></div></div>"
+    }
+    document.getElementById("dodadi").innerHTML+=dodadi
+
+
+  }
+  function tocnaoznaka(oznaka) {
+    var ressult= oznaka.split("-")
+    if(ressult[0]!=="Z3"||ressult[1]!=="UNR"){
+      return false
+    }
+    for (let i=0;i<ressult[2].length-1;i++){
+      if (isNaN(ressult[2].charAt(i))){
+        return false;
+      }
+    }
+    return true
+  }
+  function istibroevi(oznaka){
+    var ressult= oznaka.split("-")
+    for (let i=0;i<ressult[2].length-1;i++){
+      if (ressult[2].charAt(i)!==ressult[2].charAt(i+1)){
+        return false;
+      }
+    }
+    return  true;
+  }
+  function izbrisi(obj){
+    var brisi=obj.parentNode.parentNode
+    document.getElementById("dodadi").removeChild(brisi)
+  }
+  function potvrdi(obj){
+    var brisi=obj.parentElement.parentElement
+    brisi.style.background="green"
+
+  }
+
+</script>
+</body>
+</html>
